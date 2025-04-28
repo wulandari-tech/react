@@ -7,7 +7,6 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 const cors = require('cors');
-
 app.use(cors());
 app.use(express.json());
 app.use('/api', authRouter);
