@@ -1,0 +1,16 @@
+{
+  "name": "telegram-botnet-sim",
+  "version": "1.0.0",
+  "description": "Telegram botnet simulation",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "express": "^5.1.0",
+    "http": "^0.0.1-security",
+    "os": "^0.1.2",
+    "socket.io": "^4.8.1"
+  }
+}

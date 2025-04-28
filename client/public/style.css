@@ -1,0 +1,71 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  width: 350px;
+  text-align: center;
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4f46e5;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4338ca;
+}
+
+.chat-box {
+  width: 400px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.chat-message {
+  margin-bottom: 15px;
+}
+
+.chat-message strong {
+  color: #ffd700;
+}
+
+.switch-mode {
+  margin-top: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #ccc;
+  text-decoration: underline;
+}

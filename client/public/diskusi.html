@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Diskusi</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h2>Selamat datang, {{ username }}</h2>
+      <div class="chat-box">
+        <div v-for="msg in messages" :key="msg.id" class="chat-message">
+          <strong>{{ msg.username }}:</strong> {{ msg.text }}
+        </div>
+      </div>
+      <form @submit.prevent="sendMessage">
+        <input v-model="text" placeholder="Tulis pesan..." required />
+        <button type="submit">Kirim</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          username: '',
+          text: '',
+          messages: [],
+          socket: null
+        }
+      },
+      methods: {
+        async fetchMessages() {
+          const res = await fetch('/api/history/global');
+          const data = await res.json();
+          this.messages = data;
+        },
+        sendMessage() {
+          if (this.text.trim() === '') return;
+          const payload = { username: this.username, text: this.text };
+          this.socket.emit('sendMessage', payload);
+          fetch('/api/message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          this.text = '';
+        }
+      },
+      mounted() {
+        this.username = localStorage.getItem('username');
+        if (!this.username) {
+          window.location.href = '/login.html';
+        }
+        this.fetchMessages();
+        this.socket = io();
+        this.socket.on('newMessage', (msg) => {
+          this.messages.push(msg);
+        });
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

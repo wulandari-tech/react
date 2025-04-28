@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login/Register</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App() {
+      const [isLogin, setIsLogin] = React.useState(true);
+      const [username, setUsername] = React.useState('');
+      const [password, setPassword] = React.useState('');
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        const endpoint = isLogin ? '/api/login' : '/api/register';
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await response.json();
+        alert(data.message);
+        if (response.ok && isLogin) {
+          localStorage.setItem('username', username);
+          window.location.href = '/diskusi.html';
+        }
+      };
+
+      return (
+        <div className="container">
+          <h2>{isLogin ? 'Login' : 'Register'}</h2>
+          <form onSubmit={handleSubmit}>
+            <input value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required /><br/>
+            <input value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" type="password" required /><br/>
+            <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
+          </form>
+          <div className="switch-mode" onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? 'Belum punya akun? Daftar' : 'Sudah punya akun? Login'}
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
